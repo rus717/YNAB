@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Know where your money goes — without spreadsheets or stress. 34-day free trial, no credit card needed.">
+  <meta property="og:title" content="YNAB — Know where your money goes (concept redesign)">
+  <meta property="og:description" content="34 days free. No credit card. Cancel anytime.">
+  <meta property="og:type" content="website">
+  <title>YNAB — Know where your money goes (concept redesign)</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,460;9..144,600&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+/* ═══════════════════════════════════════════
+   PRIMITIVE TOKENS
+═══════════════════════════════════════════ */
+:root {
+  --paper-50:#FBF8F2; --paper-100:#F7F3EC; --paper-200:#EFE7DA;
+  --sand-100:#E7E0D4; --sand-200:#D8CFBE;
+  --ink-900:#14110F; --ink-700:#2A2522; --ink-500:#5C534D; --ink-300:#8A7F77;
+  --green-700:#0C4A3D; --green-600:#0F5C4B; --green-500:#136F5B; --green-400:#2F8F6B;
+  --amber-500:#E8A33D; --amber-600:#C9852A;
+  --white:#FFFFFF;
+  --dim-2:2px; --dim-4:4px; --dim-8:8px; --dim-12:12px; --dim-16:16px;
+  --dim-24:24px; --dim-32:32px; --dim-40:40px; --dim-56:56px;
+  --dim-64:64px; --dim-80:80px; --dim-96:96px; --dim-128:128px;
+  --ff-display:"Fraunces",Georgia,serif;
+  --ff-body:"Hanken Grotesk",system-ui,sans-serif;
+  --fw-regular:400; --fw-medium:500; --fw-display:460; --fw-bold:600;
+  --r-12:12px; --r-pill:999px;
+  --ease-out:cubic-bezier(.22,.61,.36,1);
+  --t-micro:180ms; --t-base:480ms; --t-slow:620ms;
+}
+
+/* ═══════════════════════════════════════════
+   SEMANTIC TOKENS
+═══════════════════════════════════════════ */
+:root {
+  --color-bg:var(--paper-100); --color-bg-alt:var(--paper-50);
+  --color-surface:var(--white); --color-surface-sunken:var(--paper-200);
+  --color-text:var(--ink-900); --color-text-muted:var(--ink-500);
+  --color-text-subtle:var(--ink-300); --color-text-inverse:var(--paper-50);
+  --color-action:var(--green-500); --color-action-hover:var(--green-600);
+  --color-action-active:var(--green-700); --color-action-text:var(--paper-50);
+  --color-accent:var(--amber-500); --color-accent-hover:var(--amber-600);
+  --color-success:var(--green-400);
+  --color-border:var(--sand-100); --color-border-strong:var(--sand-200);
+  --color-focus:var(--green-500);
+  --shadow-sm:0 2px 10px rgba(20,17,15,.06);
+  --shadow-md:0 8px 30px rgba(20,17,15,.10);
+  --space-2xs:var(--dim-4); --space-xs:var(--dim-8); --space-sm:var(--dim-16);
+  --space-md:var(--dim-24); --space-lg:var(--dim-40); --space-xl:var(--dim-64);
+  --space-2xl:var(--dim-96); --space-3xl:var(--dim-128);
+  --container-max:1200px; --gutter:var(--dim-24);
+  --text-h1:clamp(2.6rem,6vw,4.75rem); --text-h2:clamp(1.9rem,3.5vw,3rem);
+  --text-h3:clamp(1.25rem,2vw,1.6rem); --text-body:1.0625rem;
+  --text-small:0.9375rem; --text-eyebrow:0.8125rem;
+  --lh-tight:1.02; --lh-snug:1.05; --lh-body:1.6;
+  --ls-eyebrow:0.12em; --ls-tight:-0.01em;
+  --radius-card:var(--r-12); --radius-pill:var(--r-pill);
+  --ease-standard:var(--ease-out);
+  --dur-micro:var(--t-micro); --dur-base:var(--t-base); --dur-slow:var(--t-slow);
+  --z-header:100; --z-sticky:90;
+}
+
+/* ═══════════════════════════════════════════
+   COMPONENT TOKENS
+═══════════════════════════════════════════ */
+:root {
+  --btn-bg:var(--color-action); --btn-bg-hover:var(--color-action-hover);
+  --btn-bg-active:var(--color-action-active); --btn-text:var(--color-action-text);
+  --btn-radius:var(--radius-pill); --btn-pad-y:var(--space-sm);
+  --btn-pad-x:var(--space-md); --btn-min-h:48px;
+  --btn-font:var(--fw-bold) var(--text-body)/1 var(--ff-body);
+  --btn-ghost-border:var(--color-border-strong); --btn-ghost-text:var(--color-text);
+  --card-bg:var(--color-surface); --card-border:1px solid var(--color-border);
+  --card-radius:var(--radius-card); --card-pad:var(--space-md);
+  --card-shadow:var(--shadow-sm); --card-shadow-hover:var(--shadow-md);
+  --card-lift:-4px;
+  --eyebrow-color:var(--color-text-muted); --eyebrow-size:var(--text-eyebrow);
+  --eyebrow-tracking:var(--ls-eyebrow);
+  --sticky-cta-bg:var(--color-surface);
+  --sticky-cta-shadow:0 -4px 20px rgba(20,17,15,.10);
+}
+
+/* ═══════════════════════════════════════════
+   BASE / RESET
+═══════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--color-bg);color:var(--color-text);
+  font:var(--fw-regular) var(--text-body)/var(--lh-body) var(--ff-body);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity:.04;
+}
+h1,h2,h3{font-family:var(--ff-display);font-weight:var(--fw-display);letter-spacing:var(--ls-tight)}
+h1{font-size:var(--text-h1);line-height:var(--lh-tight)}
+h2{font-size:var(--text-h2);line-height:var(--lh-snug)}
+h3{font-size:var(--text-h3);line-height:var(--lh-snug)}
+p{line-height:var(--lh-body)}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit;text-decoration:none}
+ul,ol{list-style:none}
+button{cursor:pointer;border:none;background:none;font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--color-focus);outline-offset:3px;border-radius:4px}
+header,main,footer,section{position:relative;z-index:1}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+}
+
+/* ═══════════════════════════════════════════
+   ATOMS — .btn
+═══════════════════════════════════════════ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:var(--space-xs);
+  background:var(--btn-bg);color:var(--btn-text);font:var(--btn-font);
+  padding:var(--btn-pad-y) var(--btn-pad-x);border-radius:var(--btn-radius);
+  min-height:var(--btn-min-h);white-space:nowrap;text-decoration:none;
+  transition:background var(--dur-micro) var(--ease-standard),
+             transform var(--dur-micro) var(--ease-standard);
+}
+.btn:hover{background:var(--btn-bg-hover)}
+.btn:active{background:var(--btn-bg-active);transform:scale(.98)}
+.btn--lg{padding:calc(var(--btn-pad-y)*1.1) calc(var(--btn-pad-x)*1.25);font-size:var(--text-body)}
+.btn--ghost{background:transparent;color:var(--btn-ghost-text);border:1px solid var(--btn-ghost-border)}
+.btn--ghost:hover{background:var(--color-surface-sunken)}
+.btn--amber{background:var(--amber-500);color:var(--ink-900)}
+.btn--amber:hover{background:var(--amber-600)}
+
+/* ATOMS — .eyebrow */
+.eyebrow{
+  display:block;font-family:var(--ff-body);font-size:var(--eyebrow-size);
+  font-weight:var(--fw-bold);color:var(--eyebrow-color);
+  letter-spacing:var(--eyebrow-tracking);text-transform:uppercase;
+}
+
+/* ATOMS — .stars */
+.stars{display:inline-flex;gap:2px;line-height:1}
+.stars svg{width:15px;height:15px;fill:var(--color-accent)}
+
+/* ATOMS — .field */
+.field{display:flex;flex-direction:column;gap:var(--space-xs)}
+.field__label{font-size:var(--text-small);font-weight:var(--fw-medium);color:var(--color-text-muted)}
+.field__input{
+  background:var(--color-surface);border:1px solid var(--color-border-strong);
+  border-radius:var(--r-12);padding:var(--space-sm) var(--space-md);
+  font:inherit;font-size:var(--text-body);color:var(--color-text);
+  min-height:48px;width:100%;
+  transition:border-color var(--dur-micro) var(--ease-standard);
+}
+.field__input:focus{border-color:var(--color-focus);outline:2px solid var(--color-focus);outline-offset:0}
+.field__error{font-size:var(--text-small);color:#C0392B;display:none}
+.field--error .field__input{border-color:#C0392B}
+.field--error .field__error{display:block}
+
+/* ═══════════════════════════════════════════
+   MOLECULES
+═══════════════════════════════════════════ */
+
+/* trust-line */
+.trust-line{display:flex;align-items:center;gap:var(--space-xs);flex-wrap:wrap;font-size:var(--text-small);color:var(--color-text-muted)}
+.trust-line__sep{color:var(--color-border-strong)}
+
+/* benefit-card */
+.benefit-card{
+  background:var(--card-bg);border:var(--card-border);border-radius:var(--card-radius);
+  padding:var(--card-pad);box-shadow:var(--card-shadow);
+  display:flex;flex-direction:column;gap:var(--space-sm);
+  transition:transform var(--dur-micro) var(--ease-standard),
+             box-shadow var(--dur-micro) var(--ease-standard);
+}
+.benefit-card:hover{transform:translateY(var(--card-lift));box-shadow:var(--card-shadow-hover)}
+.benefit-card__icon{
+  width:40px;height:40px;background:var(--color-surface-sunken);border-radius:10px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.benefit-card__icon svg{width:20px;height:20px;stroke:var(--color-action);stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.benefit-card__title{font-family:var(--ff-display);font-size:var(--text-h3);font-weight:var(--fw-display)}
+.benefit-card__text{color:var(--color-text-muted);font-size:var(--text-small);flex:1}
+
+/* ui-frag inside card */
+.ui-frag{background:var(--color-surface-sunken);border-radius:8px;padding:var(--space-sm);margin-top:auto;border:1px solid var(--color-border)}
+.ui-frag__row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--color-border);font-size:0.8125rem}
+.ui-frag__row:last-child{border-bottom:none}
+.ui-frag__label{color:var(--color-text-muted)}
+.ui-frag__val{font-weight:var(--fw-bold);font-variant-numeric:tabular-nums}
+.ui-frag__bar{height:3px;background:var(--color-border);border-radius:2px;margin-top:3px;overflow:hidden}
+.ui-frag__fill{height:100%;background:var(--color-accent);border-radius:2px}
+.ui-frag__fill--green{background:var(--color-success)}
+
+/* step */
+.step{display:flex;flex-direction:column;gap:var(--space-xs)}
+.step__num{width:36px;height:36px;background:var(--color-action);color:var(--color-action-text);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:var(--fw-bold);font-size:var(--text-small);flex-shrink:0}
+.step__title{font-family:var(--ff-display);font-size:var(--text-h3);font-weight:var(--fw-display)}
+.step__text{color:var(--color-text-muted);font-size:var(--text-small)}
+
+/* testimonial */
+.testimonial{
+  background:var(--card-bg);border:var(--card-border);border-radius:var(--card-radius);
+  padding:var(--card-pad);box-shadow:var(--card-shadow);
+  display:flex;flex-direction:column;gap:var(--space-sm);flex-shrink:0;width:300px;min-width:260px;
+}
+.testimonial__quote{font-size:var(--text-body);line-height:var(--lh-body);flex:1}
+.testimonial__author{display:flex;align-items:center;gap:var(--space-sm)}
+.testimonial__avatar{
+  width:44px;height:44px;border-radius:50%;background:var(--sand-200);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:var(--fw-bold);font-size:0.8125rem;color:var(--ink-500);flex-shrink:0;
+}
+.testimonial__name{font-weight:var(--fw-bold);font-size:var(--text-small)}
+.testimonial__result{font-size:0.8125rem;color:var(--color-success);font-weight:var(--fw-medium)}
+
+/* faq-item */
+.faq-item{border-bottom:1px solid var(--color-border)}
+.faq-item:first-child{border-top:1px solid var(--color-border)}
+.faq-item__q{
+  width:100%;text-align:left;padding:var(--space-md) 0;
+  font-size:var(--text-body);font-weight:var(--fw-medium);
+  display:flex;justify-content:space-between;align-items:center;gap:var(--space-md);
+}
+.faq-item__icon{width:20px;height:20px;flex-shrink:0;transition:transform var(--dur-micro) var(--ease-standard)}
+.faq-item__q[aria-expanded="true"] .faq-item__icon{transform:rotate(45deg)}
+.faq-item__a{padding-bottom:var(--space-md);color:var(--color-text-muted);line-height:var(--lh-body)}
+.faq-item__a[hidden]{display:none}
+
+/* price-row */
+.price-row{display:flex;align-items:baseline;gap:var(--space-sm);flex-wrap:wrap;justify-content:center}
+.price-row__main{font-family:var(--ff-display);font-size:var(--text-h3);font-weight:var(--fw-display)}
+.price-row__sep{color:var(--color-text-muted)}
+.price-row__trial{font-size:var(--text-small);color:var(--color-success);font-weight:var(--fw-medium)}
+
+/* logo-cell */
+.logo-cell{display:flex;align-items:center;justify-content:center;opacity:.5;transition:opacity var(--dur-micro)}
+.logo-cell:hover{opacity:.75}
+
+/* ═══════════════════════════════════════════
+   LAYOUT UTILITIES
+═══════════════════════════════════════════ */
+.container{max-width:var(--container-max);margin-inline:auto;padding-inline:var(--gutter)}
+.section{padding-block:var(--space-2xl)}
+.section--alt{background:var(--color-bg-alt)}
+.tc{text-align:center}
+.mt-xs{margin-top:var(--space-xs)} .mt-sm{margin-top:var(--space-sm)}
+.mt-md{margin-top:var(--space-md)} .mt-lg{margin-top:var(--space-lg)}
+
+/* ═══════════════════════════════════════════
+   SCROLL REVEAL
+═══════════════════════════════════════════ */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity var(--dur-base) var(--ease-standard),transform var(--dur-base) var(--ease-standard)}
+.reveal.in{opacity:1;transform:none}
+.hero-el{opacity:0;transform:translateY(16px)}
+
+/* ═══════════════════════════════════════════
+   SITE HEADER
+═══════════════════════════════════════════ */
+.site-header{
+  position:sticky;top:0;z-index:var(--z-header);
+  background:rgba(247,243,236,.92);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--color-border);
+}
+.site-header__inner{
+  max-width:var(--container-max);margin-inline:auto;padding-inline:var(--gutter);
+  padding-block:var(--dim-16);display:flex;align-items:center;justify-content:space-between;
+}
+.logo{display:flex;align-items:center;gap:var(--space-xs);font-family:var(--ff-display);font-weight:var(--fw-bold);font-size:1.375rem;letter-spacing:-0.02em;text-decoration:none;color:var(--color-text)}
+.logo__mark{width:32px;height:32px;background:var(--color-action);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo__concept{font-family:var(--ff-body);font-size:0.625rem;font-weight:var(--fw-regular);color:var(--color-text-subtle);letter-spacing:.08em;text-transform:uppercase;align-self:flex-end;margin-bottom:1px}
+
+/* ═══════════════════════════════════════════
+   S1 — HERO
+═══════════════════════════════════════════ */
+.hero{padding-block:var(--space-2xl) var(--space-xl);overflow:hidden}
+.hero__layout{display:grid;gap:var(--space-lg);align-items:center}
+@media(min-width:768px){.hero__layout{grid-template-columns:60% 1fr;gap:var(--space-2xl)}}
+.hero__copy{display:flex;flex-direction:column;gap:var(--space-sm)}
+.hero__sub{font-size:clamp(1rem,1.4vw,1.125rem);color:var(--color-text-muted);max-width:46ch;line-height:var(--lh-body)}
+.hero__cta-group{display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-xs);margin-top:var(--space-xs)}
+.hero__micro{font-size:var(--text-small);color:var(--color-text-subtle)}
+
+/* App mock */
+.app-mock{
+  background:var(--color-surface);border-radius:24px;
+  box-shadow:var(--shadow-md),0 0 0 1px var(--color-border);
+  overflow:hidden;width:100%;max-width:340px;margin-inline:auto;
+}
+.mock-bar{background:var(--green-700);padding:10px var(--space-md) 6px;display:flex;justify-content:space-between;align-items:center}
+.mock-bar__time{font-size:.75rem;font-weight:var(--fw-bold);color:var(--paper-50)}
+.mock-header{background:var(--green-700);padding:var(--space-sm) var(--space-md) var(--space-md)}
+.mock-header__label{font-size:.6875rem;color:rgba(247,243,236,.6);letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px}
+.mock-balance{font-family:var(--ff-display);font-size:2rem;font-weight:var(--fw-display);color:var(--paper-50);font-variant-numeric:tabular-nums}
+.mock-status{font-size:.75rem;color:var(--amber-500);font-weight:var(--fw-medium);margin-top:2px}
+.mock-body{padding:var(--space-sm) var(--space-md);display:flex;flex-direction:column;gap:0}
+.mock-section-label{font-size:.6875rem;font-weight:var(--fw-bold);color:var(--color-text-subtle);letter-spacing:.08em;text-transform:uppercase;padding:var(--space-xs) 0 var(--space-2xs)}
+.mock-cat{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--color-border);gap:var(--space-sm)}
+.mock-cat:last-child{border-bottom:none}
+.mock-cat__left{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.mock-cat__name{font-size:.875rem;font-weight:var(--fw-medium);color:var(--color-text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mock-cat__bar{height:3px;background:var(--color-border);border-radius:2px;overflow:hidden}
+.mock-cat__fill{height:100%;border-radius:2px;background:var(--color-accent)}
+.mock-cat__fill--ok{background:var(--color-success)}
+.mock-cat__amount{font-size:.875rem;font-weight:var(--fw-bold);font-variant-numeric:tabular-nums;flex-shrink:0}
+
+/* ═══════════════════════════════════════════
+   S2 — PROOF STRIP
+═══════════════════════════════════════════ */
+.proof-strip{padding-block:var(--space-lg);border-top:1px solid var(--color-border);border-bottom:1px solid var(--color-border)}
+.proof-strip__caption{font-size:var(--text-eyebrow);font-weight:var(--fw-bold);color:var(--color-text-subtle);letter-spacing:var(--ls-eyebrow);text-transform:uppercase;text-align:center;margin-bottom:var(--space-md)}
+.proof-strip__logos{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:var(--space-lg) var(--space-xl)}
+
+/* ═══════════════════════════════════════════
+   S3 — PROBLEM
+═══════════════════════════════════════════ */
+.problem{text-align:center}
+.problem__h2{max-width:24ch;margin-inline:auto;margin-bottom:var(--space-lg)}
+.problem__list{display:flex;flex-direction:column;gap:var(--space-sm);max-width:480px;margin-inline:auto}
+.problem__item{display:flex;align-items:center;gap:var(--space-sm);background:var(--color-surface);border:var(--card-border);border-radius:var(--radius-card);padding:var(--space-sm) var(--space-md);text-align:left;box-shadow:var(--shadow-sm)}
+.problem__dot{width:8px;height:8px;background:var(--color-accent);border-radius:50%;flex-shrink:0}
+
+/* ═══════════════════════════════════════════
+   S4 — SOLUTION
+═══════════════════════════════════════════ */
+.solution__grid{display:grid;gap:var(--space-md);margin-top:var(--space-lg)}
+@media(min-width:768px){.solution__grid{grid-template-columns:1fr 1fr}}
+@media(min-width:1024px){.solution__grid{grid-template-columns:1fr 1fr 1fr}}
+.solution__cta{text-align:center;margin-top:var(--space-lg);display:flex;flex-direction:column;align-items:center;gap:var(--space-sm)}
+
+/* ═══════════════════════════════════════════
+   S5 — HOW
+═══════════════════════════════════════════ */
+.how{background:var(--color-bg-alt)}
+.how__steps{display:grid;gap:var(--space-lg);margin-top:var(--space-lg);position:relative}
+@media(min-width:768px){
+  .how__steps{grid-template-columns:1fr 1fr 1fr;gap:var(--space-xl)}
+  .how__line{display:block;position:absolute;top:18px;left:calc(16.66% + 18px);right:calc(16.66% + 18px);height:2px;background:var(--color-border);z-index:0}
+  .how__line-fill{width:0;height:100%;background:var(--color-accent);transition:width 1.2s var(--ease-standard)}
+  .how__line.is-drawn .how__line-fill{width:100%}
+  .step{z-index:1}
+}
+.how__line{display:none}
+
+/* ═══════════════════════════════════════════
+   S6 — TESTIMONIALS
+═══════════════════════════════════════════ */
+.testimonials__header{text-align:center;margin-bottom:var(--space-lg)}
+.testimonials__track-wrap{overflow:hidden;margin-inline:calc(-1*var(--gutter));padding-inline:var(--gutter)}
+.testimonials__track{display:flex;gap:var(--space-md);padding-bottom:var(--space-xs)}
+@media(prefers-reduced-motion:no-preference){.testimonials__track{transition:transform var(--dur-slow) var(--ease-standard)}}
+@media(prefers-reduced-motion:reduce){.testimonials__track{flex-wrap:wrap;justify-content:center}}
+.testimonials__cta{text-align:center;margin-top:var(--space-lg);display:flex;flex-direction:column;align-items:center;gap:var(--space-sm)}
+.carousel-dots{display:flex;gap:var(--space-xs);justify-content:center;margin-top:var(--space-md)}
+.carousel-dot{width:8px;height:8px;border-radius:50%;background:var(--color-border-strong);padding:0;transition:background var(--dur-micro),transform var(--dur-micro)}
+.carousel-dot.active{background:var(--color-action);transform:scale(1.35)}
+
+/* ═══════════════════════════════════════════
+   S7 — CTA + PRICE
+═══════════════════════════════════════════ */
+.cta-price{background:var(--color-surface-sunken);text-align:center}
+.cta-price__inner{display:flex;flex-direction:column;align-items:center;gap:var(--space-md)}
+.cta-price__h2{max-width:28ch}
+
+/* ═══════════════════════════════════════════
+   S8 — FAQ
+═══════════════════════════════════════════ */
+.faq__inner{max-width:720px;margin-inline:auto;margin-top:var(--space-lg)}
+
+/* ═══════════════════════════════════════════
+   S9 — FINAL CTA
+═══════════════════════════════════════════ */
+.final-cta{background:var(--green-700);text-align:center}
+.final-cta__inner{display:flex;flex-direction:column;align-items:center;gap:var(--space-md)}
+.final-cta h2,.final-cta p{color:var(--paper-50)}
+.final-cta h2{max-width:24ch}
+.final-cta .eyebrow{color:rgba(247,243,236,.55)}
+.final-cta .trust-line{color:rgba(247,243,236,.6);justify-content:center}
+.final-cta .hero__micro{color:rgba(247,243,236,.55)}
+
+/* ═══════════════════════════════════════════
+   TRIAL FORM (anchor target)
+═══════════════════════════════════════════ */
+.trial-form{background:var(--color-bg-alt)}
+.trial-form__card{max-width:440px;margin-inline:auto;background:var(--color-surface);border:var(--card-border);border-radius:var(--radius-card);padding:var(--space-lg);box-shadow:var(--shadow-sm)}
+.trial-form__card form{display:flex;flex-direction:column;gap:var(--space-md)}
+
+/* ═══════════════════════════════════════════
+   S10 — FOOTER
+═══════════════════════════════════════════ */
+.site-footer{background:var(--ink-900);padding-block:var(--space-lg)}
+.site-footer__inner{max-width:var(--container-max);margin-inline:auto;padding-inline:var(--gutter);display:flex;align-items:center;flex-wrap:wrap;gap:var(--space-md);justify-content:space-between}
+.site-footer .logo{color:var(--paper-200)}
+.site-footer .logo__concept{color:var(--ink-300)}
+.site-footer__links{display:flex;gap:var(--space-md);flex-wrap:wrap}
+.site-footer__links a{font-size:var(--text-small);color:var(--ink-300);transition:color var(--dur-micro)}
+.site-footer__links a:hover{color:var(--paper-200)}
+.site-footer__region{font-size:var(--text-small);color:var(--ink-300);display:flex;align-items:center;gap:4px;border:1px solid var(--ink-700);padding:5px var(--space-sm);border-radius:var(--r-pill);transition:color var(--dur-micro),border-color var(--dur-micro)}
+.site-footer__region:hover{color:var(--paper-200);border-color:var(--ink-500)}
+.site-footer__note{font-size:.75rem;color:var(--ink-500);width:100%}
+
+/* ═══════════════════════════════════════════
+   STICKY MOBILE CTA
+═══════════════════════════════════════════ */
+.sticky-cta{
+  position:fixed;bottom:0;left:0;right:0;z-index:var(--z-sticky);
+  background:var(--sticky-cta-bg);box-shadow:var(--sticky-cta-shadow);
+  padding:var(--space-sm) var(--gutter);
+  padding-bottom:max(var(--space-sm),env(safe-area-inset-bottom));
+  display:none;
+}
+.sticky-cta .btn{width:100%}
+@media(min-width:769px){.sticky-cta{display:none!important}}
+
+/* cta-micro copy */
+.cta-micro{font-size:var(--text-small);color:var(--color-text-subtle)}
+  </style>
+</head>
+<body>
+
+<!-- SITE HEADER -->
+<header class="site-header" role="banner">
+  <div class="site-header__inner">
+    <a class="logo" href="#" aria-label="YNAB concept redesign — home">
+      <span class="logo__mark" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+          <rect x="2" y="9" width="5" height="7" rx="1.5" fill="white" opacity=".9"/>
+          <rect x="9" y="5" width="5" height="11" rx="1.5" fill="white"/>
+          <rect x="2" y="2" width="5" height="5" rx="1.5" fill="white" opacity=".6"/>
+        </svg>
+      </span>
+      YNAB
+      <span class="logo__concept">concept</span>
+    </a>
+    <a class="btn btn--lg" href="#trial-form">Start free</a>
+  </div>
+</header>
+
+<main>
+
+<!-- S1 HERO -->
+<section class="hero section" id="hero">
+  <div class="container hero__layout">
+
+    <div class="hero__copy">
+      <p class="eyebrow hero-el">Budget, not balance-check</p>
+      <h1 class="hero-el">Know where your money goes — no spreadsheets, no stress</h1>
+      <p class="hero__sub hero-el">YNAB gives you a simple system: assign every dollar a job and stop living paycheck to paycheck.</p>
+      <div class="hero__cta-group hero-el">
+        <a class="btn btn--lg" href="#trial-form">Start free</a>
+        <p class="hero__micro">34 days free · No credit card needed</p>
+      </div>
+      <div class="trust-line hero-el">
+        <span class="stars" aria-label="Rating 4.6 out of 5" role="img">
+          <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+          <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+          <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+          <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+          <svg viewBox="0 0 16 16" style="opacity:.45"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+        </span>
+        <span>4.6 on Trustpilot</span>
+        <span class="trust-line__sep">·</span>
+        <span>Apple App of the Day</span>
+      </div>
+    </div>
+
+    <!-- A1 — Budget screen mock, rendered in DOM -->
+    <figure class="app-mock hero-el" aria-label="Budget app screen showing fully assigned categories" style="opacity:0;transform:translateY(24px)">
+      <div class="mock-bar">
+        <span class="mock-bar__time">9:41</span>
+        <svg width="46" height="11" viewBox="0 0 46 11" fill="none" aria-hidden="true">
+          <rect x="0" y="3" width="6" height="5" rx="1" fill="white" opacity=".55"/>
+          <rect x="8" y="1.5" width="6" height="7" rx="1" fill="white" opacity=".75"/>
+          <rect x="16" y="0" width="6" height="10" rx="1" fill="white"/>
+          <rect x="26" y="1.5" width="18" height="7" rx="3.5" stroke="white" stroke-width="1" fill="none" opacity=".55"/>
+          <rect x="27" y="2.5" width="13" height="5" rx="2.5" fill="white" opacity=".65"/>
+        </svg>
+      </div>
+      <div class="mock-header">
+        <p class="mock-header__label">Ready to assign</p>
+        <p class="mock-balance" id="js-balance">$0.00</p>
+        <p class="mock-status">✓ Fully budgeted</p>
+      </div>
+      <div class="mock-body">
+        <p class="mock-section-label">This month</p>
+        <div class="mock-cat">
+          <div class="mock-cat__left">
+            <span class="mock-cat__name">Rent</span>
+            <div class="mock-cat__bar"><div class="mock-cat__fill mock-cat__fill--ok" style="width:100%"></div></div>
+          </div>
+          <span class="mock-cat__amount">$1,450</span>
+        </div>
+        <div class="mock-cat">
+          <div class="mock-cat__left">
+            <span class="mock-cat__name">Groceries</span>
+            <div class="mock-cat__bar"><div class="mock-cat__fill mock-cat__fill--ok" style="width:78%"></div></div>
+          </div>
+          <span class="mock-cat__amount">$320</span>
+        </div>
+        <div class="mock-cat">
+          <div class="mock-cat__left">
+            <span class="mock-cat__name">Vacation fund</span>
+            <div class="mock-cat__bar"><div class="mock-cat__fill" style="width:42%"></div></div>
+          </div>
+          <span class="mock-cat__amount">$200</span>
+        </div>
+        <div class="mock-cat">
+          <div class="mock-cat__left">
+            <span class="mock-cat__name">Dining out</span>
+            <div class="mock-cat__bar"><div class="mock-cat__fill" style="width:58%"></div></div>
+          </div>
+          <span class="mock-cat__amount">$85</span>
+        </div>
+        <div class="mock-cat">
+          <div class="mock-cat__left">
+            <span class="mock-cat__name">Emergency fund</span>
+            <div class="mock-cat__bar"><div class="mock-cat__fill" style="width:35%"></div></div>
+          </div>
+          <span class="mock-cat__amount">$150</span>
+        </div>
+      </div>
+    </figure>
+
+  </div>
+</section>
+
+<!-- S2 PROOF STRIP -->
+<section class="proof-strip">
+  <div class="container">
+    <p class="proof-strip__caption">Recognized as best budgeting app 2025</p>
+    <ul class="proof-strip__logos reveal" role="list">
+      <li class="logo-cell">
+        <svg width="72" height="18" viewBox="0 0 72 18" aria-label="Forbes (placeholder)" role="img">
+          <text x="0" y="14" font-family="Georgia,serif" font-size="15" font-weight="bold" fill="currentColor">Forbes</text>
+        </svg>
+      </li>
+      <li class="logo-cell">
+        <svg width="160" height="18" viewBox="0 0 160 18" aria-label="The New York Times (placeholder)" role="img">
+          <text x="0" y="13" font-family="Georgia,serif" font-size="10.5" fill="currentColor" font-weight="bold">The New York Times</text>
+        </svg>
+      </li>
+      <li class="logo-cell">
+        <svg width="68" height="18" viewBox="0 0 68 18" aria-label="WIRED (placeholder)" role="img">
+          <text x="0" y="14" font-family="Arial,sans-serif" font-size="14" font-weight="bold" fill="currentColor" letter-spacing="2">WIRED</text>
+        </svg>
+      </li>
+      <li class="logo-cell">
+        <svg width="108" height="18" viewBox="0 0 108 18" aria-label="Fast Company (placeholder)" role="img">
+          <text x="0" y="13" font-family="Arial,sans-serif" font-size="10.5" font-weight="bold" fill="currentColor">Fast Company</text>
+        </svg>
+      </li>
+      <li class="logo-cell">
+        <svg width="118" height="18" viewBox="0 0 118 18" aria-label="Business Insider (placeholder)" role="img">
+          <text x="0" y="13" font-family="Arial,sans-serif" font-size="10" fill="currentColor" font-weight="600">Business Insider</text>
+        </svg>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- S3 PROBLEM -->
+<section class="problem section">
+  <div class="container">
+    <p class="eyebrow reveal">Sound familiar?</p>
+    <h2 class="problem__h2 reveal">Money comes in. By month's end — you don't know where it went.</h2>
+    <ul class="problem__list" role="list">
+      <li class="problem__item reveal">
+        <span class="problem__dot" aria-hidden="true"></span>
+        Your paycheck dissolves before the month ends
+      </li>
+      <li class="problem__item reveal">
+        <span class="problem__dot" aria-hidden="true"></span>
+        Subscriptions you forgot you're paying for
+      </li>
+      <li class="problem__item reveal">
+        <span class="problem__dot" aria-hidden="true"></span>
+        Saving just never seems to actually happen
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- S4 SOLUTION + 3 BENEFITS -->
+<section class="section section--alt">
+  <div class="container">
+    <p class="eyebrow reveal">The method</p>
+    <h2 class="reveal">One method. Four rules. Full control.</h2>
+    <p class="reveal" style="color:var(--color-text-muted);max-width:50ch;margin-top:var(--space-xs)">Give every dollar a job before you spend it. That's the whole system. Here's what it changes:</p>
+    <div class="solution__grid">
+
+      <article class="benefit-card reveal">
+        <div class="benefit-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="6.5"/><polyline points="10,7 10,10 12,12"/></svg>
+        </div>
+        <h3 class="benefit-card__title">Give every dollar a job</h3>
+        <p class="benefit-card__text">Assign your money to categories the moment it lands. No surprises, no guilt — just intentional spending.</p>
+        <div class="ui-frag" aria-hidden="true">
+          <div class="ui-frag__row">
+            <span class="ui-frag__label">Rent</span><span class="ui-frag__val">$1,450</span>
+          </div>
+          <div class="ui-frag__bar"><div class="ui-frag__fill ui-frag__fill--green" style="width:100%"></div></div>
+          <div class="ui-frag__row" style="margin-top:6px">
+            <span class="ui-frag__label">Groceries</span><span class="ui-frag__val">$320</span>
+          </div>
+          <div class="ui-frag__bar"><div class="ui-frag__fill" style="width:65%"></div></div>
+        </div>
+      </article>
+
+      <article class="benefit-card reveal">
+        <div class="benefit-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 20 20"><line x1="3" y1="6" x2="17" y2="6"/><line x1="3" y1="10" x2="17" y2="10"/><line x1="3" y1="14" x2="11" y2="14"/></svg>
+        </div>
+        <h3 class="benefit-card__title">See all your spending</h3>
+        <p class="benefit-card__text">Every transaction, every category, in one place. Finally understand where your money actually goes.</p>
+        <div class="ui-frag" aria-hidden="true">
+          <div class="ui-frag__row">
+            <span class="ui-frag__label">Dining out</span><span class="ui-frag__val" style="color:var(--color-success)">$85 left</span>
+          </div>
+          <div class="ui-frag__row">
+            <span class="ui-frag__label">Transport</span><span class="ui-frag__val">$120 left</span>
+          </div>
+          <div class="ui-frag__row">
+            <span class="ui-frag__label">Entertainment</span><span class="ui-frag__val" style="color:var(--amber-600)">$12 left</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="benefit-card reveal">
+        <div class="benefit-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 20 20"><polyline points="3,14 8,9 11,12 17,6"/><polyline points="13,6 17,6 17,10"/></svg>
+        </div>
+        <h3 class="benefit-card__title">Save without the pain</h3>
+        <p class="benefit-card__text">Set goals for big expenses — vacation, car repair, new laptop. Save a little each month so it's ready.</p>
+        <div class="ui-frag" aria-hidden="true">
+          <div class="ui-frag__row">
+            <span class="ui-frag__label">Vacation</span><span class="ui-frag__val">$1,200 / $3,000</span>
+          </div>
+          <div class="ui-frag__bar"><div class="ui-frag__fill" style="width:40%"></div></div>
+          <div class="ui-frag__row" style="margin-top:6px">
+            <span class="ui-frag__label">Emergency fund</span><span class="ui-frag__val">$2,800 / $5,000</span>
+          </div>
+          <div class="ui-frag__bar"><div class="ui-frag__fill" style="width:56%"></div></div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="solution__cta">
+      <a class="btn btn--lg reveal" href="#trial-form">Start free</a>
+      <p class="cta-micro reveal">34 days free · No credit card · Cancel anytime</p>
+      <div class="trust-line reveal" style="justify-content:center">
+        <span class="stars" aria-label="Rating 4.6 out of 5" role="img">
+          <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+          <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+          <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+          <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+          <svg viewBox="0 0 16 16" style="opacity:.45"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+        </span>
+        <span style="font-size:var(--text-small)">4.6 on Trustpilot · App of the Day (Apple)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S5 HOW IT WORKS -->
+<section class="how section">
+  <div class="container">
+    <p class="eyebrow tc reveal">Get started</p>
+    <h2 class="tc reveal">Ready in an evening.</h2>
+    <ol class="how__steps">
+      <div class="how__line" aria-hidden="true"><div class="how__line-fill"></div></div>
+      <li class="step reveal">
+        <span class="step__num" aria-hidden="true">1</span>
+        <h3 class="step__title">Connect your accounts</h3>
+        <p class="step__text">Link your bank in seconds. Or enter transactions manually — YNAB works both ways, no judgment.</p>
+      </li>
+      <li class="step reveal">
+        <span class="step__num" aria-hidden="true">2</span>
+        <h3 class="step__title">Assign your money</h3>
+        <p class="step__text">Give every dollar a category. Rent, groceries, savings goals — nothing left unassigned.</p>
+      </li>
+      <li class="step reveal">
+        <span class="step__num" aria-hidden="true">3</span>
+        <h3 class="step__title">Spend with confidence</h3>
+        <p class="step__text">Check your budget before you buy. No spreadsheets, no anxiety — just calm, clear decisions.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- S6 TESTIMONIALS -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="testimonials__header">
+      <p class="eyebrow reveal">Real results</p>
+      <h2 class="reveal">What changes when you know where your money goes</h2>
+    </div>
+
+    <div class="testimonials__track-wrap">
+      <div class="testimonials__track" id="js-track" role="list">
+
+        <figure class="testimonial reveal" role="listitem">
+          <div class="trust-line" style="margin-bottom:var(--space-xs)">
+            <span class="stars" aria-label="5 stars" role="img">
+              <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+              <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+              <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+              <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+              <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+            </span>
+          </div>
+          <blockquote class="testimonial__quote">"In one year I saved enough for a vacation and stopped stressing about money. First time in my adult life."</blockquote>
+          <figcaption class="testimonial__author">
+            <div class="testimonial__avatar" aria-hidden="true">MR</div>
+            <div>
+              <p class="testimonial__name">Maria R.</p>
+              <p class="testimonial__result">Saved $3,200 in 12 months</p>
+            </div>
+          </figcaption>
+        </figure>
+
+        <figure class="testimonial reveal" role="listitem">
+          <div class="trust-line" style="margin-bottom:var(--space-xs)">
+            <span class="stars" aria-label="5 stars" role="img">
+              <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+              <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+              <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+              <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+              <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+            </span>
+          </div>
+          <blockquote class="testimonial__quote">"I thought I was just bad with money. Turns out I never had a system. Paid off $8,000 of debt in 18 months."</blockquote>
+          <figcaption class="testimonial__author">
+            <div class="testimonial__avatar" aria-hidden="true">JK</div>
+            <div>
+              <p class="testimonial__name">James K.</p>
+              <p class="testimonial__result">Paid off $8,000 in debt</p>
+            </div>
+          </figcaption>
+        </figure>
+
+        <!-- Slightly restrained review — increases trust -->
+        <figure class="testimonial reveal" role="listitem">
+          <div class="trust-line" style="margin-bottom:var(--space-xs)">
+            <span class="stars" aria-label="4 stars" role="img">
+              <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+              <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+              <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+              <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+              <svg viewBox="0 0 16 16" style="opacity:.25"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+            </span>
+          </div>
+          <blockquote class="testimonial__quote">"Took me a couple weeks to really get it. Not effortless. But three months in — my partner and I finally talk about money without arguing."</blockquote>
+          <figcaption class="testimonial__author">
+            <div class="testimonial__avatar" aria-hidden="true">SL</div>
+            <div>
+              <p class="testimonial__name">Sarah L.</p>
+              <p class="testimonial__result">Stopped fighting about money</p>
+            </div>
+          </figcaption>
+        </figure>
+
+        <figure class="testimonial reveal" role="listitem">
+          <div class="trust-line" style="margin-bottom:var(--space-xs)">
+            <span class="stars" aria-label="5 stars" role="img">
+              <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+              <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+              <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+              <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+              <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+            </span>
+          </div>
+          <blockquote class="testimonial__quote">"Emergency fund went from $0 to $6,000 in 14 months. I can't believe it took me this long to find something that works."</blockquote>
+          <figcaption class="testimonial__author">
+            <div class="testimonial__avatar" aria-hidden="true">DT</div>
+            <div>
+              <p class="testimonial__name">David T.</p>
+              <p class="testimonial__result">Built $6,000 emergency fund</p>
+            </div>
+          </figcaption>
+        </figure>
+
+        <figure class="testimonial reveal" role="listitem">
+          <div class="trust-line" style="margin-bottom:var(--space-xs)">
+            <span class="stars" aria-label="5 stars" role="img">
+              <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+              <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+              <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+              <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+              <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+            </span>
+          </div>
+          <blockquote class="testimonial__quote">"As a freelancer my income is unpredictable. YNAB is the only thing that's ever made me feel financially stable."</blockquote>
+          <figcaption class="testimonial__author">
+            <div class="testimonial__avatar" aria-hidden="true">AC</div>
+            <div>
+              <p class="testimonial__name">Anna C.</p>
+              <p class="testimonial__result">Freelancer, financially stable</p>
+            </div>
+          </figcaption>
+        </figure>
+
+      </div>
+    </div>
+
+    <div class="carousel-dots" id="js-dots" aria-hidden="true"></div>
+
+    <div class="testimonials__cta">
+      <a class="btn btn--lg reveal" href="#trial-form">Start free</a>
+      <p class="cta-micro reveal">34 days free · No credit card · Cancel anytime</p>
+    </div>
+  </div>
+</section>
+
+<!-- S7 CTA + PRICE -->
+<section class="cta-price section">
+  <div class="container">
+    <div class="cta-price__inner">
+      <p class="eyebrow reveal">Transparent pricing</p>
+      <h2 class="cta-price__h2 reveal">Try everything free for 34 days</h2>
+      <div class="price-row reveal">
+        <span class="price-row__main">$109/year</span>
+        <span class="price-row__sep">or</span>
+        <span class="price-row__main">$14.99/month</span>
+        <span class="price-row__trial">· 34 days free</span>
+      </div>
+      <a class="btn btn--lg reveal" href="#trial-form">Start free</a>
+      <p class="cta-micro reveal">Cancel anytime in settings. Refund if it didn't work for you.</p>
+      <div class="trust-line reveal" style="justify-content:center">
+        <span class="stars" aria-label="Rating 4.6" role="img">
+          <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+          <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+          <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+          <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+          <svg viewBox="0 0 16 16" style="opacity:.45"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z"/></svg>
+        </span>
+        <span>4.6 Trustpilot · No hidden fees</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S8 FAQ -->
+<section class="section">
+  <div class="container">
+    <p class="eyebrow tc reveal">Common questions</p>
+    <h2 class="tc reveal">Everything you want to know</h2>
+    <div class="faq__inner">
+
+      <div class="faq-item reveal">
+        <button class="faq-item__q" aria-expanded="false" aria-controls="fa1" id="fq1">
+          Is this complicated?
+          <svg class="faq-item__icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><line x1="10" y1="4" x2="10" y2="16"/><line x1="4" y1="10" x2="16" y2="10"/></svg>
+        </button>
+        <div class="faq-item__a" id="fa1" role="region" aria-labelledby="fq1" hidden>Most people get the basics in an evening. YNAB walks you through setup step by step. The method is simple — four rules. Go as detailed as you like, or keep it high-level.</div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-item__q" aria-expanded="false" aria-controls="fa2" id="fq2">
+          Is my financial data safe?
+          <svg class="faq-item__icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><line x1="10" y1="4" x2="10" y2="16"/><line x1="4" y1="10" x2="16" y2="10"/></svg>
+        </button>
+        <div class="faq-item__a" id="fa2" role="region" aria-labelledby="fq2" hidden>Your data is encrypted in transit and at rest with 256-bit encryption. Bank connections are read-only — we can see transactions, but cannot move money. You can also use YNAB fully manually without connecting any account.</div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-item__q" aria-expanded="false" aria-controls="fa3" id="fq3">
+          How is this different from free apps?
+          <svg class="faq-item__icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><line x1="10" y1="4" x2="10" y2="16"/><line x1="4" y1="10" x2="16" y2="10"/></svg>
+        </button>
+        <div class="faq-item__a" id="fa3" role="region" aria-labelledby="fq3" hidden>Free apps track what you've already spent. YNAB's method is about deciding in advance — giving money a purpose before you spend it. That shift changes behavior. New users save an average of $600 in their first two months.</div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-item__q" aria-expanded="false" aria-controls="fa4" id="fq4">
+          What happens after 34 days?
+          <svg class="faq-item__icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><line x1="10" y1="4" x2="10" y2="16"/><line x1="4" y1="10" x2="16" y2="10"/></svg>
+        </button>
+        <div class="faq-item__a" id="fa4" role="region" aria-labelledby="fq4" hidden>You choose whether to subscribe — $109/year or $14.99/month. If it's not for you, cancel in Settings in seconds. No dark patterns, no retention hoops.</div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-item__q" aria-expanded="false" aria-controls="fa5" id="fq5">
+          Does it work with my bank?
+          <svg class="faq-item__icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><line x1="10" y1="4" x2="10" y2="16"/><line x1="4" y1="10" x2="16" y2="10"/></svg>
+        </button>
+        <div class="faq-item__a" id="fa5" role="region" aria-labelledby="fq5" hidden>YNAB connects with thousands of financial institutions. If yours isn't listed, import via CSV or enter transactions manually. Many users prefer manual entry — it keeps you more aware of spending.</div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-item__q" aria-expanded="false" aria-controls="fa6" id="fq6">
+          What if my income is irregular?
+          <svg class="faq-item__icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><line x1="10" y1="4" x2="10" y2="16"/><line x1="4" y1="10" x2="16" y2="10"/></svg>
+        </button>
+        <div class="faq-item__a" id="fa6" role="region" aria-labelledby="fq6" hidden>YNAB is especially powerful for freelancers and self-employed people. You only budget what's actually in your account — when money arrives, you assign it. The method handles variable income better than any fixed-budget spreadsheet.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- S9 FINAL CTA -->
+<section class="final-cta section">
+  <div class="container">
+    <div class="final-cta__inner">
+      <p class="eyebrow reveal">Your next move</p>
+      <h2 class="reveal" id="final-heading">Every month without a system is another month wondering where the money went.</h2>
+      <a class="btn btn--lg btn--amber reveal" href="#trial-form">Start free</a>
+      <p class="hero__micro reveal">34 days free · No credit card · Cancel anytime in settings</p>
+      <div class="trust-line reveal">
+        <span class="stars" aria-label="Rating 4.6 out of 5" role="img">
+          <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z" fill="#E8A33D"/></svg>
+          <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z" fill="#E8A33D"/></svg>
+          <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z" fill="#E8A33D"/></svg>
+          <svg viewBox="0 0 16 16"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z" fill="#E8A33D"/></svg>
+          <svg viewBox="0 0 16 16" style="opacity:.45"><path d="M8 1l1.8 3.7 4 .6-2.9 2.8.7 4L8 10.1l-3.6 1.9.7-4L2.2 5.3l4-.6z" fill="#E8A33D"/></svg>
+        </span>
+        4.6 on Trustpilot · App of the Day (Apple)
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRIAL FORM (anchor target for all CTAs) -->
+<section class="trial-form section" id="trial-form" aria-labelledby="form-heading">
+  <div class="container">
+    <div class="trial-form__card reveal">
+      <p class="eyebrow tc">Start your free trial</p>
+      <h2 class="tc mt-xs" id="form-heading" style="font-size:var(--text-h3);margin-bottom:var(--space-lg)">34 days free. No credit card needed.</h2>
+      <form id="js-form" novalidate>
+        <div class="field" id="ff-name">
+          <label class="field__label" for="f-name">First name</label>
+          <input class="field__input" type="text" id="f-name" name="name" autocomplete="given-name" placeholder="Jane">
+          <span class="field__error" id="fe-name" role="alert">Please enter your name.</span>
+        </div>
+        <div class="field" id="ff-email">
+          <label class="field__label" for="f-email">Email address</label>
+          <input class="field__input" type="email" id="f-email" name="email" autocomplete="email" placeholder="jane@example.com">
+          <span class="field__error" id="fe-email" role="alert">Please enter a valid email address.</span>
+        </div>
+        <button type="submit" class="btn btn--lg" style="margin-top:var(--space-xs);width:100%">Start free — 34 days</button>
+        <p class="cta-micro tc">No credit card required · Cancel anytime</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- S10 FOOTER -->
+<footer class="site-footer" role="contentinfo">
+  <div class="site-footer__inner">
+    <a class="logo" href="#" aria-label="YNAB concept — back to top">
+      <span class="logo__mark" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+          <rect x="2" y="9" width="5" height="7" rx="1.5" fill="white" opacity=".9"/>
+          <rect x="9" y="5" width="5" height="11" rx="1.5" fill="white"/>
+          <rect x="2" y="2" width="5" height="5" rx="1.5" fill="white" opacity=".6"/>
+        </svg>
+      </span>
+      YNAB
+      <span class="logo__concept">concept</span>
+    </a>
+    <nav class="site-footer__links" aria-label="Footer">
+      <a href="#">Privacy</a>
+      <a href="#">Contact</a>
+      <a href="#">Terms</a>
+    </nav>
+    <button class="site-footer__region" aria-label="Change region">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <circle cx="6.5" cy="6.5" r="5"/>
+        <path d="M6.5 1.5C5.2 3.3 4.5 4.8 4.5 6.5s.7 3.2 2 5M6.5 1.5C7.8 3.3 8.5 4.8 8.5 6.5s-.7 3.2-2 5M1.5 6.5h10"/>
+      </svg>
+      Region
+    </button>
+    <p class="site-footer__note">Unsolicited concept redesign · Not affiliated with YNAB or You Need A Budget, LLC · All content is original.</p>
+  </div>
+</footer>
+
+<!-- STICKY MOBILE CTA -->
+<div class="sticky-cta" id="js-sticky" role="complementary" aria-label="Quick start">
+  <a class="btn btn--lg" href="#trial-form">Start free</a>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── staggerLoad: hero elements ── */
+  function staggerLoad(){
+    var els = document.querySelectorAll('.hero-el');
+    if(rm){
+      els.forEach(function(el){el.style.opacity='1';el.style.transform='none';});
+      return;
+    }
+    els.forEach(function(el,i){
+      el.style.transition='opacity 480ms cubic-bezier(.22,.61,.36,1) '+i*90+'ms,transform 480ms cubic-bezier(.22,.61,.36,1) '+i*90+'ms';
+      requestAnimationFrame(function(){el.style.opacity='1';el.style.transform='none';});
+    });
+    /* app-mock enters slightly later */
+    var mock=document.querySelector('.app-mock');
+    if(mock){
+      mock.style.transition='opacity 620ms cubic-bezier(.22,.61,.36,1) 480ms,transform 620ms cubic-bezier(.22,.61,.36,1) 480ms';
+      requestAnimationFrame(function(){mock.style.opacity='1';mock.style.transform='none';});
+    }
+  }
+
+  /* ── countUp: mock balance ── */
+  function countUp(){
+    var el=document.getElementById('js-balance');
+    if(!el) return;
+    if(rm){el.textContent='$0.00';return;}
+    var start=3240,dur=1400,t0=null;
+    function frame(t){
+      if(!t0) t0=t;
+      var p=Math.min((t-t0)/dur,1);
+      var ease=1-Math.pow(1-p,3);
+      var v=start*(1-ease);
+      el.textContent='$'+v.toFixed(2);
+      if(p<1) requestAnimationFrame(frame);
+      else el.textContent='$0.00';
+    }
+    setTimeout(function(){requestAnimationFrame(frame);},700);
+  }
+
+  /* ── revealOnScroll ── */
+  function revealOnScroll(){
+    var els=document.querySelectorAll('.reveal');
+    if(rm){els.forEach(function(el){el.classList.add('in');});return;}
+    if(!('IntersectionObserver' in window)){
+      els.forEach(function(el){el.classList.add('in');});return;
+    }
+    var obs=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}
+      });
+    },{threshold:0.15});
+    els.forEach(function(el){obs.observe(el);});
+  }
+
+  /* ── progress line S5 ── */
+  function progressLine(){
+    var line=document.querySelector('.how__line');
+    if(!line||rm) return;
+    var obs=new IntersectionObserver(function(entries){
+      if(entries[0].isIntersecting){line.classList.add('is-drawn');obs.disconnect();}
+    },{threshold:0.5});
+    obs.observe(line);
+  }
+
+  /* ── accordion ── */
+  function accordion(){
+    var btns=document.querySelectorAll('.faq-item__q');
+    btns.forEach(function(btn){
+      btn.addEventListener('click',function(){
+        var open=btn.getAttribute('aria-expanded')==='true';
+        btns.forEach(function(b){
+          b.setAttribute('aria-expanded','false');
+          var p=document.getElementById(b.getAttribute('aria-controls'));
+          if(p) p.hidden=true;
+        });
+        if(!open){
+          btn.setAttribute('aria-expanded','true');
+          var panel=document.getElementById(btn.getAttribute('aria-controls'));
+          if(panel) panel.hidden=false;
+        }
+      });
+    });
+  }
+
+  /* ── sticky CTA ── */
+  function stickyCTA(){
+    var cta=document.getElementById('js-sticky');
+    var hero=document.querySelector('.hero');
+    var footer=document.querySelector('.site-footer');
+    if(!cta||!hero) return;
+    function update(){
+      if(window.innerWidth>768){cta.style.display='none';return;}
+      var hb=hero.getBoundingClientRect().bottom;
+      var ft=footer?footer.getBoundingClientRect().top:Infinity;
+      cta.style.display=(hb<0&&ft>window.innerHeight)?'block':'none';
+    }
+    window.addEventListener('scroll',update,{passive:true});
+    window.addEventListener('resize',update,{passive:true});
+    update();
+  }
+
+  /* ── carousel ── */
+  function carousel(){
+    var track=document.getElementById('js-track');
+    var dotsWrap=document.getElementById('js-dots');
+    if(!track||!dotsWrap) return;
+    var cards=Array.from(track.querySelectorAll('.testimonial'));
+    if(cards.length<2) return;
+    if(rm) return; /* static grid via CSS */
+
+    var cur=0,timer=null;
+    track.style.transition='transform 480ms cubic-bezier(.22,.61,.36,1)';
+
+    /* build dots */
+    cards.forEach(function(_,i){
+      var d=document.createElement('button');
+      d.className='carousel-dot'+(i===0?' active':'');
+      d.setAttribute('aria-label','Testimonial '+(i+1));
+      d.addEventListener('click',function(){goTo(i);});
+      dotsWrap.appendChild(d);
+    });
+
+    function goTo(i){
+      cur=i;
+      var w=cards[0].offsetWidth+parseInt(getComputedStyle(track).gap||'24');
+      track.style.transform='translateX(-'+(cur*w)+'px)';
+      dotsWrap.querySelectorAll('.carousel-dot').forEach(function(d,j){
+        d.classList.toggle('active',j===cur);
+      });
+    }
+
+    function next(){goTo((cur+1)%cards.length);}
+    function start(){timer=setInterval(next,4500);}
+    function stop(){clearInterval(timer);}
+
+    track.addEventListener('mouseenter',stop);
+    track.addEventListener('mouseleave',start);
+    track.addEventListener('focusin',stop);
+    track.addEventListener('focusout',start);
+    window.addEventListener('resize',function(){goTo(cur);},{passive:true});
+    start();
+  }
+
+  /* ── form validation ── */
+  function formVal(){
+    var form=document.getElementById('js-form');
+    if(!form) return;
+    var fName=document.getElementById('f-name'),ffName=document.getElementById('ff-name');
+    var fEmail=document.getElementById('f-email'),ffEmail=document.getElementById('ff-email');
+
+    function checkName(){var ok=fName.value.trim().length>0;ffName.classList.toggle('field--error',!ok);return ok;}
+    function checkEmail(){var ok=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fEmail.value.trim());ffEmail.classList.toggle('field--error',!ok);return ok;}
+
+    fName.addEventListener('blur',checkName);
+    fEmail.addEventListener('blur',checkEmail);
+    form.addEventListener('submit',function(e){
+      e.preventDefault();
+      var nok=checkName(),eok=checkEmail();
+      if(nok&&eok){
+        form.innerHTML='<p style="text-align:center;padding:var(--space-lg) 0;color:var(--color-success);font-size:var(--text-body)">✓ You\'re in — check your email to get started.</p>';
+      } else {
+        (!nok?fName:fEmail).focus();
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded',function(){
+    staggerLoad();
+    countUp();
+    revealOnScroll();
+    progressLine();
+    accordion();
+    stickyCTA();
+    carousel();
+    formVal();
+  });
+}());
+</script>
+</body>
+</html>
